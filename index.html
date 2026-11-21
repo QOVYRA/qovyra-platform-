@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QOVYRA | Smart Management</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f6fb;color:#172033}
+header{background:#101b35;color:white;padding:22px}
+header h1{margin:0;color:#70a5ff}
+header p{color:#b9c7df}
+.container{padding:20px;max-width:1100px;margin:auto}
+nav{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}
+button{border:0;padding:12px 17px;border-radius:9px;background:#e4eaff;color:#1749a0;font-weight:bold;cursor:pointer}
+button.active{background:#2458c5;color:white}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.card{background:white;padding:20px;border-radius:13px;box-shadow:0 3px 15px #14264a12}
+.card h3{font-size:14px;color:#68748b}
+.number{font-size:27px;font-weight:bold;color:#2458c5}
+section{background:white;margin-top:20px;padding:20px;border-radius:13px}
+input{padding:12px;border:1px solid #d8dfec;border-radius:8px;width:100%;margin:7px 0}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+th,td{padding:13px;border-bottom:1px solid #eee;text-align:right}
+th{background:#f2f5fc}
+.hidden{display:none}
+.primary{background:#2458c5;color:white;margin-top:10px}
+</style>
+</head>
+<body>
+<header>
+<h1>QOVYRA</h1>
+<p>منصة الإدارة الذكية للتعليم</p>
+</header>
+<div class="container">
+<h2>لوحة التحكم</h2>
+<p>مرحباً بك في نظام إدارة مؤسستك التعليمية</p>
+
+<nav>
+<button class="active" onclick="show('home',this)">الرئيسية</button>
+<button onclick="show('students',this)">الطلاب</button>
+<button onclick="show('grades',this)">الدرجات</button>
+<button onclick="show('attendance',this)">الحضور</button>
+<button onclick="show('payments',this)">الالتزامات</button>
+</nav>
+
+<div id="home">
+<div class="cards">
+<div class="card"><h3>إجمالي الطلاب</h3><div class="number" id="total">0</div></div>
+<div class="card"><h3>الحضور اليوم</h3><div class="number">0</div></div>
+<div class="card"><h3>الاختبارات</h3><div class="number">0</div></div>
+<div class="card"><h3>الطلاب المتميزون</h3><div class="number">0</div></div>
+</div>
+<section>
+<h3>مرحباً بك في QOVYRA</h3>
+<p>نظام واحد لإدارة الطلاب والدرجات والحضور والمتابعة المالية.</p>
+</section>
+</div>
+
+<div id="students" class="hidden">
+<section>
+<h3>إضافة طالب جديد</h3>
+<input id="studentName" placeholder="اسم الطالب">
+<input id="studentPhone" placeholder="رقم الهاتف">
+<button class="primary" onclick="addStudent()">إضافة الطالب</button>
+<table>
+<thead><tr><th>الاسم</th><th>الهاتف</th></tr></thead>
+<tbody id="studentList"></tbody>
+</table>
+</section>
+</div>
+
+<div id="grades" class="hidden">
+<section>
+<h3>تسجيل الدرجات</h3>
+<input id="gradeName" placeholder="اسم الطالب">
+<input id="gradeValue" type="number" placeholder="الدرجة">
+<input id="gradeMax" type="number" placeholder="الدرجة النهائية">
+<button class="primary" onclick="addGrade()">حفظ الدرجة</button>
+<div id="gradeList"></div>
+</section>
+</div>
+
+<div id="attendance" class="hidden">
+<section>
+<h3>إدارة الحضور</h3>
+<p>سيتم إضافة تسجيل الحضور باستخدام QR في المرحلة التالية.</p>
+<button class="primary" onclick="alert('سيتم تطوير ماسح QR في المرحلة التالية')">تسجيل حضور تجريبي</button>
+</section>
+</div>
+
+<div id="payments" class="hidden">
+<section>
+<h3>الالتزامات المالية</h3>
+<input placeholder="اسم الطالب">
+<input type="number" placeholder="المبلغ المستحق">
+<button class="primary" onclick="alert('سيتم تطوير نظام المدفوعات في المرحلة التالية')">إضافة التزام</button>
+</section>
+</div>
+</div>
+
+<script>
+let students=[];
+function show(id,btn){
+document.querySelectorAll('.container > div').forEach(x=>x.classList.add('hidden'));
+document.getElementById(id).classList.remove('hidden');
+document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+btn.classList.add('active');
+}
+function addStudent(){
+let name=document.getElementById('studentName').value.trim();
+let phone=document.getElementById('studentPhone').value.trim();
+if(!name)return alert('اكتب اسم الطالب');
+students.push({name,phone});
+document.getElementById('studentList').innerHTML=students.map(s=>`<tr><td>${s.name}</td><td>${s.phone}</td></tr>`).join('');
+document.getElementById('total').textContent=students.length;
+document.getElementById('studentName').value='';
+document.getElementById('studentPhone').value='';
+}
+function addGrade(){
+let name=document.getElementById('gradeName').value;
+let value=Number(document.getElementById('gradeValue').value);
+let max=Number(document.getElementById('gradeMax').value);
+if(!name||max<=0||value<0||value>max)return alert('راجع بيانات الدرجة');
+let percent=value/max*100;
+let level=percent>=85?'ممتاز':percent>=70?'جيد جداً':percent>=50?'مقبول':'يحتاج متابعة';
+document.getElementById('gradeList').innerHTML+=`<p>${name} — ${value}/${max} — ${level}</p>`;
+}
+</script>
+</body>
+</html>
