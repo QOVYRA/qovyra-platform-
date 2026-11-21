@@ -1,1 +1,480 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QOVYRA | Smart Management</title>
+<style>
+:root{
+  --bg:#f4f6fc;
+  --navy:#111a35;
+  --blue:#536dfe;
+  --purple:#8065f6;
+  --text:#202943;
+  --muted:#8790a7;
+  --white:#fff;
+  --border:#e9ecf4;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Tahoma,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+button,input{font:inherit}
+button{cursor:pointer;border:0}
+.hidden{display:none!important}
+
+/* LOGIN */
+.login-page{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  background:white;
+}
+.login-art{
+  background:linear-gradient(145deg,#111a35,#283c75 65%,#6559ce);
+  color:white;
+  padding:65px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+}
+.login-art:before,.login-art:after{
+  content:"";
+  position:absolute;
+  border:1px solid #ffffff20;
+  border-radius:50%;
+  width:390px;height:390px;
+  left:-100px;top:-100px;
+}
+.login-art:after{
+  width:520px;height:520px;
+  left:-160px;top:-160px;
+}
+.brand{
+  font-size:32px;
+  font-weight:900;
+  letter-spacing:3px;
+  color:#8da3ff;
+}
+.login-art h1{
+  font-size:42px;
+  line-height:1.5;
+  max-width:500px;
+  margin:35px 0 15px;
+}
+.login-art p{
+  color:#c4cce5;
+  line-height:2;
+  max-width:430px;
+}
+.art-tag{
+  margin-top:35px;
+  padding:13px 18px;
+  border:1px solid #ffffff35;
+  border-radius:12px;
+  width:max-content;
+  color:#dce3ff;
+}
+.login-form-wrap{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:35px;
+}
+.login-form{width:100%;max-width:390px}
+.login-form h2{font-size:28px;margin-bottom:8px}
+.login-form .sub{color:var(--muted);margin-bottom:30px}
+.field{margin:18px 0}
+.field label{display:block;font-size:14px;font-weight:bold;margin-bottom:9px}
+.field input{
+  width:100%;padding:15px;
+  border:1px solid var(--border);
+  border-radius:12px;outline:none;
+  background:#fafbff;
+}
+.field input:focus{border-color:var(--blue)}
+.primary{
+  background:linear-gradient(110deg,var(--blue),var(--purple));
+  color:white;padding:15px 20px;
+  border-radius:12px;font-weight:bold;
+  width:100%;box-shadow:0 8px 20px #536dfe30;
+}
+.note{font-size:12px;color:var(--muted);line-height:1.8;margin-top:18px}
+
+/* DASHBOARD */
+.app{min-height:100vh}
+.sidebar{
+  width:250px;background:var(--navy);
+  color:white;position:fixed;
+  top:0;right:0;bottom:0;
+  padding:25px 17px;z-index:5;
+}
+.logo{font-size:25px;font-weight:900;color:#91a6ff;padding:8px 12px}
+.logo small{display:block;font-size:10px;color:#aab4d0;letter-spacing:2px;margin-top:6px}
+.menu-title{font-size:11px;color:#7783a5;margin:35px 12px 12px}
+.nav-btn{
+  width:100%;display:flex;align-items:center;
+  gap:12px;text-align:right;color:#bfc8e0;
+  background:transparent;padding:14px;
+  border-radius:11px;margin:4px 0;
+}
+.nav-btn:hover,.nav-btn.active{
+  background:#ffffff15;color:white;
+}
+.nav-icon{font-size:19px;width:24px;text-align:center}
+.sidebar-bottom{
+  position:absolute;bottom:22px;right:17px;left:17px;
+}
+.logout{
+  width:100%;padding:13px;border-radius:10px;
+  background:#ffffff12;color:#e0e5f3;
+}
+.main{margin-right:250px;padding:28px 34px;max-width:1600px}
+.topbar{
+  display:flex;justify-content:space-between;
+  align-items:center;gap:15px;margin-bottom:30px;
+}
+.welcome h1{font-size:25px;margin:0 0 8px}
+.welcome p{color:var(--muted);margin:0;font-size:14px}
+.profile{
+  display:flex;align-items:center;gap:12px;
+  background:white;padding:9px 15px;border-radius:14px;
+  border:1px solid var(--border);
+}
+.avatar{
+  width:38px;height:38px;border-radius:12px;
+  display:grid;place-items:center;
+  color:white;font-weight:bold;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+}
+.profile small{display:block;color:var(--muted);margin-top:4px}
+.section-title{font-size:20px;margin:0 0 18px}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+}
+.stat{
+  background:white;border:1px solid var(--border);
+  padding:21px;border-radius:17px;
+  box-shadow:0 5px 20px #1c2b5010;
+}
+.stat-top{display:flex;justify-content:space-between;align-items:center}
+.stat-icon{
+  width:42px;height:42px;border-radius:13px;
+  display:grid;place-items:center;font-size:20px;
+  background:#edf0ff;
+}
+.stat-label{color:var(--muted);font-size:13px}
+.stat-number{font-size:29px;font-weight:800;margin-top:15px}
+.content-grid{
+  display:grid;grid-template-columns:1.4fr 1fr;
+  gap:17px;margin-top:22px;
+}
+.panel{
+  background:white;border:1px solid var(--border);
+  border-radius:17px;padding:22px;min-width:0;
+}
+.panel h3{margin:0 0 18px;font-size:17px}
+.panel p{color:var(--muted);line-height:1.9;font-size:14px}
+.action-list{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.action{
+  padding:17px;background:#f7f8ff;
+  border-radius:13px;text-align:right;
+  color:var(--text);font-weight:bold;
+}
+.action span{display:block;font-size:21px;margin-bottom:10px}
+.page{display:none}
+.page.active{display:block}
+.form-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:12px;margin-bottom:12px;
+}
+.form-row input{
+  width:100%;padding:13px;
+  border:1px solid var(--border);
+  border-radius:10px;min-width:0;
+}
+.small-btn{
+  background:var(--blue);color:white;
+  padding:12px 18px;border-radius:10px;
+}
+.table-wrap{overflow-x:auto;margin-top:20px}
+table{width:100%;border-collapse:collapse;min-width:450px}
+th,td{padding:14px;text-align:right;border-bottom:1px solid var(--border);font-size:14px}
+th{color:var(--muted);background:#fafbff}
+.empty{color:var(--muted);padding:20px;text-align:center}
+.mobile-brand{display:none}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .content-grid{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .login-page{grid-template-columns:1fr}
+  .login-art{display:none}
+  .login-form-wrap{min-height:100vh;padding:25px}
+  .mobile-brand{display:block;font-size:25px;font-weight:900;color:var(--blue);margin-bottom:35px}
+  .sidebar{
+    top:auto;right:0;left:0;bottom:0;width:100%;
+    height:70px;padding:5px 7px;
+  }
+  .logo,.menu-title,.sidebar-bottom{display:none}
+  .sidebar nav{display:flex;justify-content:space-around;height:100%;align-items:center}
+  .nav-btn{
+    width:auto;flex:1;display:flex;flex-direction:column;
+    gap:3px;padding:7px 2px;margin:0;
+    justify-content:center;text-align:center;font-size:10px;
+  }
+  .nav-icon{font-size:19px}
+  .main{margin:0;padding:20px 15px 90px}
+  .topbar{align-items:flex-start;margin-bottom:22px}
+  .welcome h1{font-size:20px}
+  .welcome p{font-size:12px}
+  .profile{padding:7px}
+  .profile .profile-text{display:none}
+  .stats{gap:10px}
+  .stat{padding:15px}
+  .stat-number{font-size:24px}
+  .stat-icon{width:35px;height:35px}
+  .panel{padding:17px}
+  .form-row{grid-template-columns:1fr}
+  .action-list{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-page" id="loginPage">
+  <div class="login-art">
+    <div class="brand">QOVYRA</div>
+    <h1>إدارة أذكى.<br>مستقبل أفضل.</h1>
+    <p>منصة واحدة لإدارة مؤسستك التعليمية، ومتابعة الطلاب، وتنظيم الحضور والدرجات.</p>
+    <div class="art-tag">SMART EDUCATION MANAGEMENT</div>
+  </div>
+  <div class="login-form-wrap">
+    <div class="login-form">
+      <div class="mobile-brand">QOVYRA</div>
+      <h2>مرحباً بعودتك</h2>
+      <p class="sub">سجّل الدخول لاستكمال إدارة مؤسستك</p>
+      <form id="loginForm">
+        <div class="field">
+          <label>البريد الإلكتروني</label>
+          <input id="email" type="email" placeholder="name@example.com" required>
+        </div>
+        <div class="field">
+          <label>كلمة المرور</label>
+          <input id="password" type="password" placeholder="أدخل كلمة المرور" minlength="6" required>
+        </div>
+        <button class="primary" type="submit">تسجيل الدخول ←</button>
+      </form>
+      <div class="note">نسخة تجريبية للواجهة فقط. تسجيل الدخول الحالي غير متصل بنظام حسابات حقيقي، ولا تستخدم بيانات شخصية أو كلمات مرور حقيقية.</div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="app hidden" id="app">
+  <aside class="sidebar">
+    <div class="logo">QOVYRA<small>SMART MANAGEMENT</small></div>
+    <div class="menu-title">القائمة الرئيسية</div>
+    <nav>
+      <button class="nav-btn active" data-page="home"><span class="nav-icon">⌂</span>الرئيسية</button>
+      <button class="nav-btn" data-page="students"><span class="nav-icon">♙</span>الطلاب</button>
+      <button class="nav-btn" data-page="grades"><span class="nav-icon">▤</span>الدرجات</button>
+      <button class="nav-btn" data-page="attendance"><span class="nav-icon">▦</span>الحضور</button>
+      <button class="nav-btn" data-page="payments"><span class="nav-icon">◇</span>الالتزامات</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <button class="logout" id="logoutBtn">↪ تسجيل الخروج</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="welcome">
+        <h1 id="pageHeading">لوحة التحكم</h1>
+        <p>مرحباً بك في منصة QOVYRA</p>
+      </div>
+      <div class="profile">
+        <div class="avatar">Q</div>
+        <div class="profile-text"><strong>مدير المؤسسة</strong><small>حساب تجريبي</small></div>
+      </div>
+    </div>
+
+    <div class="page active" id="home">
+      <h2 class="section-title">نظرة عامة</h2>
+      <div class="stats">
+        <div class="stat"><div class="stat-top"><span class="stat-label">إجمالي الطلاب</span><span class="stat-icon">♙</span></div><div class="stat-number" id="totalStudents">0</div></div>
+        <div class="stat"><div class="stat-top"><span class="stat-label">الحضور اليوم</span><span class="stat-icon">✓</span></div><div class="stat-number">0</div></div>
+        <div class="stat"><div class="stat-top"><span class="stat-label">الاختبارات</span><span class="stat-icon">▤</span></div><div class="stat-number">0</div></div>
+        <div class="stat"><div class="stat-top"><span class="stat-label">الطلاب المتميزون</span><span class="stat-icon">☆</span></div><div class="stat-number">0</div></div>
+      </div>
+      <div class="content-grid">
+        <div class="panel">
+          <h3>مرحباً بك في QOVYRA</h3>
+          <p>من هنا يمكنك إدارة الطلاب ومتابعة الدرجات والحضور والالتزامات المالية من مكان واحد.</p>
+        </div>
+        <div class="panel">
+          <h3>الوصول السريع</h3>
+          <div class="action-list">
+            <button class="action" data-go="students"><span>♙</span>إضافة طالب</button>
+            <button class="action" data-go="grades"><span>▤</span>تسجيل درجة</button>
+            <button class="action" data-go="attendance"><span>▦</span>الحضور</button>
+            <button class="action" data-go="payments"><span>◇</span>الالتزامات</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="students">
+      <div class="panel">
+        <h3>إدارة الطلاب</h3>
+        <div class="form-row">
+          <input id="studentName" placeholder="اسم الطالب">
+          <input id="studentPhone" placeholder="رقم الهاتف">
+        </div>
+        <button class="small-btn" id="addStudent">+ إضافة طالب</button>
+        <div class="table-wrap">
+          <table><thead><tr><th>اسم الطالب</th><th>رقم الهاتف</th></tr></thead><tbody id="studentList"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="grades">
+      <div class="panel">
+        <h3>تسجيل الدرجات</h3>
+        <div class="form-row">
+          <input id="gradeName" placeholder="اسم الطالب">
+          <input id="gradeSubject" placeholder="اسم المادة">
+          <input id="gradeValue" type="number" min="0" placeholder="الدرجة">
+          <input id="gradeMax" type="number" min="1" placeholder="الدرجة النهائية">
+        </div>
+        <button class="small-btn" id="addGrade">حفظ الدرجة</button>
+        <div id="gradeList" class="table-wrap"></div>
+      </div>
+    </div>
+
+    <div class="page" id="attendance">
+      <div class="panel">
+        <h3>إدارة الحضور</h3>
+        <p>سيتم تطوير إنشاء رموز QR للمحاضرات وتسجيل الحضور في المرحلة القادمة.</p>
+      </div>
+    </div>
+
+    <div class="page" id="payments">
+      <div class="panel">
+        <h3>الالتزامات المالية</h3>
+        <p>سيتم تطوير تسجيل المصروفات والمدفوعات والتقارير المالية في المرحلة القادمة.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const loginPage=document.getElementById('loginPage');
+const app=document.getElementById('app');
+const pages=['home','students','grades','attendance','payments'];
+const titles={
+  home:'لوحة التحكم',
+  students:'إدارة الطلاب',
+  grades:'إدارة الدرجات',
+  attendance:'إدارة الحضور',
+  payments:'الالتزامات المالية'
+};
+let students=[];
+let grades=[];
+
+document.getElementById('loginForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  loginPage.classList.add('hidden');
+  app.classList.remove('hidden');
+});
+
+function showPage(id){
+  pages.forEach(page=>{
+    document.getElementById(page).classList.toggle('active',page===id);
+  });
+  document.querySelectorAll('.nav-btn').forEach(btn=>{
+    btn.classList.toggle('active',btn.dataset.page===id);
+  });
+  document.getElementById('pageHeading').textContent=titles[id];
+}
+
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>showPage(btn.dataset.page));
+});
+document.querySelectorAll('[data-go]').forEach(btn=>{
+  btn.addEventListener('click',()=>showPage(btn.dataset.go));
+});
+
+document.getElementById('logoutBtn').addEventListener('click',()=>{
+  app.classList.add('hidden');
+  loginPage.classList.remove('hidden');
+  document.getElementById('loginForm').reset();
+});
+
+function addCell(row,value){
+  const cell=document.createElement('td');
+  cell.textContent=value;
+  row.appendChild(cell);
+}
+
+document.getElementById('addStudent').addEventListener('click',()=>{
+  const name=document.getElementById('studentName').value.trim();
+  const phone=document.getElementById('studentPhone').value.trim();
+  if(!name){alert('اكتب اسم الطالب');return;}
+  students.push({name,phone});
+  const row=document.createElement('tr');
+  addCell(row,name);
+  addCell(row,phone||'—');
+  document.getElementById('studentList').appendChild(row);
+  document.getElementById('totalStudents').textContent=students.length;
+  document.getElementById('studentName').value='';
+  document.getElementById('studentPhone').value='';
+});
+
+document.getElementById('addGrade').addEventListener('click',()=>{
+  const name=document.getElementById('gradeName').value.trim();
+  const subject=document.getElementById('gradeSubject').value.trim();
+  const value=Number(document.getElementById('gradeValue').value);
+  const max=Number(document.getElementById('gradeMax').value);
+  if(!name||!subject||!Number.isFinite(value)||!Number.isFinite(max)||max<=0||value<0||value>max){
+    alert('راجع بيانات الدرجة');return;
+  }
+  const percent=Math.round(value/max*100);
+  const level=percent>=85?'ممتاز':percent>=70?'جيد جداً':percent>=50?'مقبول':'يحتاج متابعة';
+  const row=document.createElement('tr');
+  addCell(row,name);
+  addCell(row,subject);
+  addCell(row,value+' / '+max);
+  addCell(row,percent+'% - '+level);
+  let table=document.querySelector('#gradeList table');
+  if(!table){
+    table=document.createElement('table');
+    const head=document.createElement('thead');
+    const headerRow=document.createElement('tr');
+    ['الطالب','المادة','الدرجة','التقييم'].forEach(x=>addCell(headerRow,x));
+    head.appendChild(headerRow);
+    table.appendChild(head);
+    table.appendChild(document.createElement('tbody'));
+    document.getElementById('gradeList').appendChild(table);
+  }
+  table.querySelector('tbody').appendChild(row);
+  document.getElementById('gradeName').value='';
+  document.getElementById('gradeSubject').value='';
+  document.getElementById('gradeValue').value='';
+  document.getElementById('gradeMax').value='';
+});
+</script>
+</body>
+</html>
+
